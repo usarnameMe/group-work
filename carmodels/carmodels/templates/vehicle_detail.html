@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Vehicle Details{% endblock %}
+
+{% block content %}
+<main class="vehicle-details-page">
+    <h1 class="vehicle-title">{{ vehicle.brand }} {{ vehicle.model }}</h1>
+    <p class="vehicle-info"><strong>Year:</strong> {{ vehicle.year }}</p>
+    <p class="vehicle-info"><strong>Price:</strong> ${{ vehicle.price }}</p>
+    <p class="vehicle-info"><strong>Comments:</strong> {{ vehicle.comments }}</p>
+
+    <div class="vehicle-actions">
+        <a href="{% url 'edit_vehicle' vehicle.pk %}" class="btn btn-edit">Edit Vehicle</a>
+        <a href="{% url 'delete_vehicle' vehicle.pk %}" class="btn btn-delete">Delete Vehicle</a>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Vehicle List{% endblock %}
+
+{% block content %}
+<h1>Vehicle List</h1>
+<form method="GET" action="{% url 'vehicle_list' %}" class="search-form">
+    <input type="text" name="brand" placeholder="Search by brand" value="{{ request.GET.brand }}">
+    <input type="text" name="model" placeholder="Search by model" value="{{ request.GET.model }}">
+    <input type="number" name="year" placeholder="Search by year" value="{{ request.GET.year }}" min="1950" max="{{ current_year }}">
+    <button type="submit">Search</button>
+</form>
+
+<div class="vehicle-container">
+    {% for vehicle in vehicles %}
+        <div class="vehicle-card">
+            {% if vehicle.picture %}
+                <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.brand }} {{ vehicle.model }}" class="vehicle-image">
+            {% endif %}
+            <h2 class="vehicle-title">{{ vehicle.brand }} {{ vehicle.model }}</h2>
+            <p class="vehicle-year">Year: {{ vehicle.year }}</p>
+            <p class="vehicle-price">Price: ${{ vehicle.price }}</p>
+            <p class="vehicle-comments">{{ vehicle.comments }}</p>
+            <a href="{% url 'vehicle_detail' vehicle.pk %}" class="vehicle-detail-button">View Details</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+
