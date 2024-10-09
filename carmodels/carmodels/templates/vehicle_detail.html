@@ -6,6 +6,9 @@
 {% block content %}
 <main class="vehicle-details-page">
     <h1 class="vehicle-title">{{ vehicle.brand }} {{ vehicle.model }}</h1>
+    {% if vehicle.picture %}
+    <img src="{{ vehicle.picture.url }}" alt="{{ vehicle.brand }} {{ vehicle.model }}" class="vehicle-image">
+    {% endif %}
     <p class="vehicle-info"><strong>Year:</strong> {{ vehicle.year }}</p>
     <p class="vehicle-info"><strong>Price:</strong> ${{ vehicle.price }}</p>
     <p class="vehicle-info"><strong>Comments:</strong> {{ vehicle.comments }}</p>

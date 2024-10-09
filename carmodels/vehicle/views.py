@@ -1,8 +1,7 @@
+import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Vehicle
 from .forms import VehicleForm
-import datetime
-
 
 def vehicle_list(request):
     brand_query = request.GET.get('brand')
@@ -18,23 +17,21 @@ def vehicle_list(request):
     if year_query:
         try:
             year = int(year_query)
-            if 1950 <= year <= datetime.datetime.now().year:  # 
+            if 1950 <= year <= datetime.datetime.now().year:
                 vehicles = vehicles.filter(year=year)
         except ValueError:
-            pass  
+            pass
 
     current_year = datetime.datetime.now().year
     return render(request, 'vehicle_list.html', {'vehicles': vehicles, 'current_year': current_year})
-
 
 def vehicle_detail(request, pk):
     vehicle = get_object_or_404(Vehicle, pk=pk)
     return render(request, 'vehicle_detail.html', {'vehicle': vehicle})
 
-
 def add_vehicle(request):
     if request.method == 'POST':
-        form = VehicleForm(request.POST)
+        form = VehicleForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('vehicle_list')
@@ -42,11 +39,10 @@ def add_vehicle(request):
         form = VehicleForm()
     return render(request, 'add_vehicle.html', {'form': form})
 
-
 def edit_vehicle(request, pk):
     vehicle = get_object_or_404(Vehicle, pk=pk)
     if request.method == 'POST':
-        form = VehicleForm(request.POST, instance=vehicle)
+        form = VehicleForm(request.POST, request.FILES, instance=vehicle)
         if form.is_valid():
             form.save()
             return redirect('vehicle_detail', pk=vehicle.pk)

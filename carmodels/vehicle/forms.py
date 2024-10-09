@@ -11,7 +11,8 @@ class VehicleForm(forms.ModelForm):
 
     class Meta:
         model = Vehicle
-        fields = ['brand', 'model', 'year', 'price', 'comments']
+        fields = ['brand', 'model', 'year', 'price', 'comments', 'picture']
+
 
 
     def clean_price(self):
